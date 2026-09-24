@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nama-nama Akun | Akuntansi Dasar</title>
+<style>
+:root{
+  --navy:#1e3a5f; --navy-d:#14283f; --gold:#e0a526; --bg:#eef4fa; --card:#ffffff;
+  --text:#1f2937; --muted:#5b6b80; --good:#1f8a4c; --bad:#c0392b;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  box-sizing:border-box;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#0f1a26; --card:#152436; --text:#e7edf5; --muted:#9db0c5; }
+}
+:root[data-theme="dark"]{ --bg:#0f1a26; --card:#152436; --text:#e7edf5; --muted:#9db0c5; }
+*{box-sizing:border-box;}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100%;}
+header{position:sticky;top:0;top:env(safe-area-inset-top,0px);background:var(--navy);color:#fff;padding:14px 16px;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+header h1{margin:0;font-size:1.05rem;font-weight:700;}
+header p{margin:2px 0 0;font-size:.75rem;color:#c8d6e8;}
+nav{display:flex;overflow-x:auto;gap:6px;background:var(--navy-d);padding:8px 10px;position:sticky;top:56px;z-index:19;}
+nav button{flex:0 0 auto;background:transparent;border:1px solid rgba(255,255,255,.25);color:#dde8f5;padding:7px 12px;border-radius:20px;font-size:.78rem;cursor:pointer;white-space:nowrap;}
+nav button.active{background:var(--gold);color:#3a2900;border-color:var(--gold);font-weight:700;}
+main{max-width:820px;margin:0 auto;padding:18px 16px 60px;}
+section{display:none;animation:fade .25s ease;}
+section.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.card{background:var(--card);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+h2{color:var(--navy);margin-top:0;font-size:1.2rem;}
+:root[data-theme="dark"] h2, body:has(:root[data-theme="dark"]) h2{color:#8fb4e0;}
+h3{color:var(--navy);font-size:1rem;margin-bottom:6px;}
+ul{padding-left:20px;}
+li{margin-bottom:6px;}
+.badge{display:inline-block;background:var(--gold);color:#3a2900;font-size:.7rem;font-weight:700;padding:2px 9px;border-radius:10px;margin-bottom:8px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0;}
+.acc{border-radius:10px;padding:10px;font-size:.85rem;color:#fff;}
+.acc b{display:block;font-size:.95rem;margin-bottom:3px;}
+.aset{background:#2c6e49;} .kwj{background:#a4381a;} .mdl{background:#5b3a9c;} .pdp{background:#1f6f9c;} .bbn{background:#b8860b;}
+svg{width:100%;height:auto;max-width:600px;display:block;margin:14px auto;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:10px;}
+th,td{border:1px solid #d7e0eb;padding:8px;text-align:left;}
+th{background:var(--navy);color:#fff;}
+select,input[type=text]{width:100%;padding:6px;border-radius:6px;border:1px solid #cbd5e1;font-size:.85rem;}
+.btn{background:var(--navy);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-size:.88rem;cursor:pointer;margin-top:10px;}
+.btn:hover{background:var(--navy-d);}
+.progress-wrap{background:#dce6f0;border-radius:8px;height:8px;overflow:hidden;margin:10px 0;}
+.progress-bar{background:var(--gold);height:100%;width:0%;transition:width .3s;}
+.q{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e5eaf0;}
+.q p{font-weight:600;margin-bottom:6px;}
+.opt{display:block;background:var(--bg);border:1px solid #cbd5e1;border-radius:8px;padding:8px 10px;margin-bottom:6px;cursor:pointer;font-size:.85rem;}
+.opt.correct{background:#d3f3de;border-color:var(--good);}
+.opt.wrong{background:#fbdcd7;border-color:var(--bad);}
+#quizResult{font-weight:700;margin-top:10px;}
+.video-box{background:#0b1622;border-radius:10px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#8fa5bd;font-size:.85rem;margin-bottom:10px;}
+.done{opacity:.55;text-decoration:line-through;}
+.rpp-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #e5eaf0;font-size:.85rem;}
+.rpp-row b{flex:0 0 150px;color:var(--navy);}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:12px;}
+.fc-scene{perspective:1000px;height:120px;cursor:pointer;}
+.fc-card{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;}
+.fc-scene.flip .fc-card{transform:rotateY(180deg);}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;font-size:.82rem;font-weight:600;}
+.fc-front{background:var(--navy);color:#fff;}
+.fc-back{background:var(--gold);color:#3a2900;transform:rotateY(180deg);font-weight:500;}
+.fc-nav{display:flex;gap:8px;margin-top:12px;}
+footer{text-align:center;font-size:.72rem;color:var(--muted);padding:20px;}
+</style>
+</head>
+<body>
+<header>
+  <h1>📊 Akuntansi Dasar</h1>
+  <p>Nama-nama Akun • SMK Kelas 10 - Akuntansi Keuangan & Lembaga</p>
+</header>
+<nav id="nav"></nav>
+<main>
+
+<section id="beranda" class="active">
+  <div class="card">
+    <span class="badge">Materi Pokok</span>
+    <h2>Nama-nama Akun dalam Akuntansi</h2>
+    <p>Selamat datang! Di sini kamu akan belajar mengenal dan mengklasifikasikan akun-akun yang digunakan dalam pencatatan transaksi keuangan perusahaan.</p>
+    <h3>🎯 Tujuan Pembelajaran</h3>
+    <ul>
+      <li>Menjelaskan pengertian akun dalam akuntansi</li>
+      <li>Mengklasifikasikan akun ke dalam kelompok Aset, Kewajiban, Modal, Pendapatan, dan Beban</li>
+      <li>Membedakan akun riil dan akun nominal</li>
+      <li>Menentukan kode akun sesuai kelompoknya</li>
+      <li>Menerapkan klasifikasi akun pada kasus transaksi sederhana</li>
+    </ul>
+    <div class="progress-wrap"><div class="progress-bar" id="progBar"></div></div>
+    <p style="font-size:.8rem;color:var(--muted)" id="progText">Progres belajar: 0%</p>
+  </div>
+</section>
+
+<section id="rpp">
+  <div class="card">
+    <span class="badge">Perangkat Guru</span>
+    <h2>📋 RPP - Rencana Pelaksanaan Pembelajaran</h2>
+    <div class="rpp-row"><b>Mata Pelajaran</b><span>Akuntansi Dasar</span></div>
+    <div class="rpp-row"><b>Kelas / Jurusan</b><span>X (Sepuluh) / Akuntansi Keuangan dan Lembaga (AKL)</span></div>
+    <div class="rpp-row"><b>Materi Pokok</b><span>Nama-nama Akun</span></div>
+    <div class="rpp-row"><b>Alokasi Waktu</b><span>2 x 45 menit (1 pertemuan)</span></div>
+    <div class="rpp-row"><b>Kompetensi Dasar</b><span>3.x Menganalisis nama, kode, dan kelompok akun. &nbsp;4.x Mengelompokkan akun sesuai jenis dan kodenya.</span></div>
+    <div class="rpp-row"><b>Indikator</b><span>Menjelaskan pengertian akun; mengklasifikasikan akun ke dalam 5 kelompok; membedakan akun riil dan nominal; menentukan kode akun.</span></div>
+    <div class="rpp-row"><b>Tujuan Pembelajaran</b><span>Melalui diskusi dan penugasan, siswa mampu mengklasifikasikan nama-nama akun dengan tepat sesuai kelompoknya.</span></div>
+    <div class="rpp-row"><b>Metode</b><span>Discovery Learning, diskusi kelompok, tanya jawab, penugasan berbasis web interaktif</span></div>
+    <div class="rpp-row"><b>Media &amp; Alat</b><span>Website perangkat pembelajaran interaktif, laptop/HP, proyektor</span></div>
+    <h3 style="margin-top:14px">Langkah Pembelajaran</h3>
+    <div class="rpp-row"><b>Pendahuluan (10 menit)</b><span>Salam, doa, apersepsi, menyampaikan tujuan pembelajaran melalui halaman Beranda</span></div>
+    <div class="rpp-row"><b>Kegiatan Inti (65 menit)</b><span>Siswa membaca halaman Materi &amp; menonton Video → berlatih dengan Flashcard → mengerjakan LKPD klasifikasi akun secara berkelompok → presentasi hasil</span></div>
+    <div class="rpp-row"><b>Penutup (15 menit)</b><span>Siswa mengerjakan Kuis interaktif, guru memberi umpan balik, menyimpulkan materi bersama, doa penutup</span></div>
+    <h3 style="margin-top:14px">Penilaian</h3>
+    <div class="rpp-row"><b>Sikap</b><span>Observasi keaktifan diskusi kelompok</span></div>
+    <div class="rpp-row"><b>Pengetahuan</b><span>Skor Kuis interaktif (10 soal pilihan ganda)</span></div>
+    <div class="rpp-row"><b>Keterampilan</b><span>Hasil pengisian LKPD klasifikasi akun</span></div>
+  </div>
+</section>
+
+<section id="materi">
+  <div class="card">
+    <h2>1. Pengertian Akun</h2>
+    <p>Akun (rekening) adalah alat yang digunakan untuk mencatat transaksi keuangan yang mengakibatkan perubahan pada aset, kewajiban, modal, pendapatan, atau beban suatu perusahaan. Setiap transaksi keuangan selalu dicatat ke dalam akun yang sesuai.</p>
+  </div>
+  <div class="card">
+    <h2>2. Klasifikasi Akun</h2>
+    <p>Akun dikelompokkan menjadi 5 golongan utama:</p>
+    <div class="grid">
+      <div class="acc aset"><b>1. Aset (1xx)</b>Kas, Piutang, Perlengkapan, Peralatan, Gedung</div>
+      <div class="acc kwj"><b>2. Kewajiban (2xx)</b>Utang Usaha, Utang Bank</div>
+      <div class="acc mdl"><b>3. Modal (3xx)</b>Modal Pemilik, Prive</div>
+      <div class="acc pdp"><b>4. Pendapatan (4xx)</b>Pendapatan Jasa, Pendapatan Penjualan</div>
+      <div class="acc bbn"><b>5. Beban (5xx)</b>Beban Gaji, Beban Sewa, Beban Listrik</div>
+    </div>
+    <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg">
+      <rect x="230" y="10" width="140" height="36" rx="8" fill="#1e3a5f"/>
+      <text x="300" y="33" fill="#fff" font-size="15" text-anchor="middle" font-family="sans-serif">AKUN</text>
+      <line x1="300" y1="46" x2="150" y2="90" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="300" y1="46" x2="450" y2="90" stroke="#94a3b8" stroke-width="2"/>
+      <rect x="70" y="90" width="160" height="34" rx="8" fill="#2c6e49"/>
+      <text x="150" y="112" fill="#fff" font-size="13" text-anchor="middle" font-family="sans-serif">Akun Riil (Neraca)</text>
+      <rect x="370" y="90" width="160" height="34" rx="8" fill="#1f6f9c"/>
+      <text x="450" y="112" fill="#fff" font-size="13" text-anchor="middle" font-family="sans-serif">Akun Nominal (Laba Rugi)</text>
+      <line x1="150" y1="124" x2="60" y2="160" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="150" y1="124" x2="150" y2="160" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="150" y1="124" x2="240" y2="160" stroke="#94a3b8" stroke-width="1.5"/>
+      <rect x="15" y="160" width="90" height="30" rx="6" fill="#3d8a5f"/><text x="60" y="180" fill="#fff" font-size="11" text-anchor="middle" font-family="sans-serif">Aset</text>
+      <rect x="105" y="160" width="90" height="30" rx="6" fill="#a4381a"/><text x="150" y="180" fill="#fff" font-size="11" text-anchor="middle" font-family="sans-serif">Kewajiban</text>
+      <rect x="195" y="160" width="90" height="30" rx="6" fill="#5b3a9c"/><text x="240" y="180" fill="#fff" font-size="11" text-anchor="middle" font-family="sans-serif">Modal</text>
+      <line x1="450" y1="124" x2="405" y2="160" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="450" y1="124" x2="495" y2="160" stroke="#94a3b8" stroke-width="1.5"/>
+      <rect x="360" y="160" width="90" height="30" rx="6" fill="#1f6f9c"/><text x="405" y="180" fill="#fff" font-size="11" text-anchor="middle" font-family="sans-serif">Pendapatan</text>
+      <rect x="450" y="160" width="90" height="30" rx="6" fill="#b8860b"/><text x="495" y="180" fill="#fff" font-size="11" text-anchor="middle" font-family="sans-serif">Beban</text>
+    </svg>
+  </div>
+  <div class="card">
+    <h2>3. Akun Riil vs Akun Nominal</h2>
+    <table>
+      <tr><th>Akun Riil</th><th>Akun Nominal</th></tr>
+      <tr><td>Aset, Kewajiban, Modal</td><td>Pendapatan, Beban</td></tr>
+      <tr><td>Dilaporkan di Neraca</td><td>Dilaporkan di Laporan Laba Rugi</td></tr>
+      <tr><td>Saldo berlanjut ke periode berikutnya</td><td>Saldo ditutup di akhir periode</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="flashcard">
+  <div class="card">
+    <span class="badge">Latihan Mandiri</span>
+    <h2>🔖 Flashcard - Nama Akun</h2>
+    <p>Klik kartu untuk membalik dan melihat kelompok akunnya!</p>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="card">
+    <h2>🎬 Video Pembelajaran</h2>
+    <div class="video-box">📹 Ruang embed video (tempelkan link YouTube/video materi di sini)</div>
+    <h3>Poin Penting dari Video</h3>
+    <ul>
+      <li>Akun adalah dasar dari seluruh siklus pencatatan akuntansi</li>
+      <li>Setiap akun punya kode unik agar mudah diklasifikasikan</li>
+      <li>Kesalahan mengklasifikasikan akun akan berdampak pada laporan keuangan</li>
+    </ul>
+  </div>
+</section>
+
+<section id="lkpd">
+  <div class="card">
+    <h2>📝 LKPD - Klasifikasikan Akun</h2>
+    <p>Tentukan kelompok yang tepat untuk setiap nama akun berikut!</p>
+    <table id="lkpdTable"></table>
+    <button class="btn" onclick="checkLKPD()">Periksa Jawaban</button>
+    <p id="lkpdResult" style="font-weight:700;margin-top:10px;"></p>
+  </div>
+</section>
+
+<section id="kuis">
+  <div class="card">
+    <h2>✅ Evaluasi / Kuis</h2>
+    <div id="quizBox"></div>
+    <button class="btn" onclick="submitQuiz()">Kumpulkan Jawaban</button>
+    <p id="quizResult"></p>
+  </div>
+</section>
+
+<section id="rangkuman">
+  <div class="card">
+    <h2>📌 Rangkuman</h2>
+    <ul>
+      <li>Akun adalah alat pencatatan transaksi keuangan perusahaan</li>
+      <li>5 kelompok akun: Aset, Kewajiban, Modal, Pendapatan, Beban</li>
+      <li>Akun Riil (Aset, Kewajiban, Modal) → dilaporkan di Neraca, saldo tidak ditutup</li>
+      <li>Akun Nominal (Pendapatan, Beban) → dilaporkan di Laporan Laba Rugi, saldo ditutup tiap akhir periode</li>
+      <li>Setiap kelompok akun memiliki kode: Aset (1xx), Kewajiban (2xx), Modal (3xx), Pendapatan (4xx), Beban (5xx)</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+<footer>Perangkat Pembelajaran Akuntansi Dasar • Kelas 10 AKL</footer>
+
+<script>
+const tabs=[["beranda","🏠 Beranda"],["rpp","📋 RPP"],["materi","📘 Materi"],["flashcard","🔖 Flashcard"],["video","🎬 Video"],["lkpd","📝 LKPD"],["kuis","✅ Kuis"],["rangkuman","📌 Rangkuman"]];
+const nav=document.getElementById('nav');
+let visited=new Set(['beranda']);
+tabs.forEach(([id,label])=>{
+  const b=document.createElement('button');
+  b.textContent=label; b.dataset.id=id;
+  if(id==='beranda') b.classList.add('active');
+  b.onclick=()=>show(id);
+  nav.appendChild(b);
+});
+function show(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.toggle('active',s.id===id));
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.id===id));
+  visited.add(id); updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function updateProgress(){
+  const pct=Math.round((visited.size/tabs.length)*100);
+  document.getElementById('progBar').style.width=pct+'%';
+  document.getElementById('progText').textContent='Progres belajar: '+pct+'%';
+}
+
+// LKPD
+const lkpdData=[
+  ["Kas","aset"],["Piutang Usaha","aset"],["Utang Bank","kewajiban"],["Modal Pemilik","modal"],
+  ["Pendapatan Jasa","pendapatan"],["Beban Gaji","beban"],["Perlengkapan Kantor","aset"],
+  ["Utang Usaha","kewajiban"],["Prive","modal"],["Beban Listrik","beban"]
+];
+const opts=[["aset","Aset"],["kewajiban","Kewajiban"],["modal","Modal"],["pendapatan","Pendapatan"],["beban","Beban"]];
+const tbl=document.getElementById('lkpdTable');
+tbl.innerHTML='<tr><th>Nama Akun</th><th>Kelompok Akun</th></tr>'+lkpdData.map((d,i)=>
+  `<tr><td>${d[0]}</td><td><select id="lk${i}"><option value="">-- pilih --</option>${opts.map(o=>`<option value="${o[0]}">${o[1]}</option>`).join('')}</select></td></tr>`
+).join('');
+function checkLKPD(){
+  let correct=0;
+  lkpdData.forEach((d,i)=>{ if(document.getElementById('lk'+i).value===d[1]) correct++; });
+  document.getElementById('lkpdResult').textContent=`Hasil: ${correct} dari ${lkpdData.length} benar.`;
+}
+
+// Flashcard
+const fcData=[
+  ["Kas","Aset — harta paling likuid, mudah dicairkan"],
+  ["Piutang Usaha","Aset — hak tagih perusahaan kepada pelanggan"],
+  ["Perlengkapan","Aset — barang habis pakai untuk operasional"],
+  ["Utang Usaha","Kewajiban — kewajiban membayar kepada pemasok"],
+  ["Utang Bank","Kewajiban — pinjaman dari lembaga keuangan"],
+  ["Modal Pemilik","Modal — hak kekayaan pemilik atas perusahaan"],
+  ["Prive","Modal (pengurang) — pengambilan pribadi oleh pemilik"],
+  ["Pendapatan Jasa","Pendapatan — imbalan atas jasa yang diberikan"],
+  ["Beban Gaji","Beban — biaya membayar upah karyawan"],
+  ["Beban Listrik","Beban — biaya penggunaan listrik operasional"]
+];
+const fcGrid=document.getElementById('fcGrid');
+fcGrid.innerHTML=fcData.map((d,i)=>`
+  <div class="fc-scene" onclick="this.classList.toggle('flip')">
+    <div class="fc-card">
+      <div class="fc-face fc-front">${d[0]}</div>
+      <div class="fc-face fc-back">${d[1]}</div>
+    </div>
+  </div>`).join('');
+
+// Kuis
+const quiz=[
+["Akun yang digunakan mencatat harta yang dimiliki perusahaan disebut...",["Aset","Kewajiban","Modal","Beban"],0],
+["Kelompok akun Aset, Kewajiban, dan Modal termasuk dalam akun...",["Nominal","Riil","Sementara","Kontra"],1],
+["Kode akun 4xx biasanya digunakan untuk kelompok akun...",["Aset","Beban","Pendapatan","Modal"],2],
+["\"Utang Usaha\" termasuk dalam kelompok akun...",["Aset","Kewajiban","Modal","Pendapatan"],1],
+["Akun yang saldonya ditutup pada akhir periode akuntansi adalah akun...",["Riil","Nominal","Campuran","Neraca"],1],
+["\"Prive\" merupakan akun pengurang dari...",["Aset","Kewajiban","Modal","Pendapatan"],2],
+["Contoh akun Beban adalah...",["Kas","Piutang","Beban Gaji","Modal"],2],
+["Akun Pendapatan dan Beban dilaporkan dalam laporan...",["Neraca","Laba Rugi","Perubahan Modal","Arus Kas"],1],
+["\"Perlengkapan Kantor\" termasuk dalam kelompok akun...",["Aset","Kewajiban","Beban","Pendapatan"],0],
+["Akun Aset, Kewajiban, dan Modal dilaporkan dalam...",["Neraca","Laba Rugi","Jurnal Umum","Buku Besar"],0]
+];
+const qbox=document.getElementById('quizBox');
+let answers=new Array(quiz.length).fill(null);
+qbox.innerHTML=quiz.map((q,i)=>`<div class="q"><p>${i+1}. ${q[0]}</p>${q[1].map((opt,j)=>
+  `<span class="opt" id="q${i}o${j}" onclick="pick(${i},${j})">${opt}</span>`).join('')}</div>`).join('');
+function pick(i,j){
+  answers[i]=j;
+  quiz[i][1].forEach((_,k)=>document.getElementById(`q${i}o${k}`).style.outline='none');
+  document.getElementById(`q${i}o${j}`).style.outline='3px solid #1e3a5f';
+}
+function submitQuiz(){
+  let score=0;
+  quiz.forEach((q,i)=>{
+    const correctIdx=q[2];
+    q[1].forEach((_,j)=>{
+      const el=document.getElementById(`q${i}o${j}`);
+      el.classList.remove('correct','wrong');
+      if(j===correctIdx) el.classList.add('correct');
+      else if(answers[i]===j) el.classList.add('wrong');
+    });
+    if(answers[i]===correctIdx) score++;
+  });
+  document.getElementById('quizResult').textContent=`Skor kamu: ${score} / ${quiz.length} (${Math.round(score/quiz.length*100)}%)`;
+}
+</script>
+</body>
+</html>
